@@ -87,26 +87,38 @@ def main():
         elif choice == '3':
             manager.view_contacts()
             if manager.contacts:
-                try:
-                    index = int(input("Enter the number of the contact to edit: ")) - 1
-                    print("Leave blank to keep current value")
-                    name = input(f"Enter new name [{manager.contacts[index]['name']}]: ") or None
-                    phone = input(f"Enter new phone [{manager.contacts[index]['phone']}]: ") or None
-                    email = input(f"Enter new email [{manager.contacts[index]['email']}]: ") or None
-                    manager.edit_contact(index, name, phone, email)
-                except ValueError:
-                    print("Please enter a valid number.")
+                while True:
+                    try:
+                        index = int(input("Enter the number of the contact to edit: ")) - 1
+                        if 0<= index < len(manager.contacts):
+                            print("Leave blank to keep current value")
+                            name = input(f"Enter new name [{manager.contacts[index]['name']}]: ") or None
+                            phone = input(f"Enter new phone [{manager.contacts[index]['phone']}]: ") or None
+                            email = input(f"Enter new email [{manager.contacts[index]['email']}]: ") or None
+                            manager.edit_contact(index, name, phone, email)
+                            break
+                        else:
+                            print("Invalid contact number. Please enter valid contact number.")
+                    except ValueError:
+                        print("Please enter a valid number.")
         
         elif choice == '4':
             manager.view_contacts()
             if manager.contacts:
-                try:
-                    index = int(input("Enter the number of the contact to delete: ")) - 1
-                    confirm = input(f"Are you sure you want to delete {manager.contacts[index]['name']}? (y/n): ")
-                    if confirm.lower() == 'y':
-                        manager.delete_contact(index)
-                except ValueError:
-                    print("Please enter a valid number.")
+                while True:
+                    try:
+                        index = int(input("Enter the number of the contact to delete: "))- 1
+                        if 0<= index < len(manager.contacts):
+                            confirm = input(f"Are you sure you want to delete {manager.contacts[index]['name']}? (y/n): ")
+                            if confirm.lower() == 'y':
+                                manager.delete_contact(index)
+                            elif confirm.lower() == 'n':
+                                print("Deletion cancelled.")
+                            break
+                        else:
+                            print("Contact number does not exist. Please enter valid contact number.")
+                    except ValueError:
+                        print("Please enter a valid number.")
         
         elif choice == '5':
             print("Exiting program. Goodbye!")
